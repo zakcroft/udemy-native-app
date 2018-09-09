@@ -1,5 +1,8 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { StyleSheet, Text, View, TextInput, Button } from "react-native";
+
+import Input from "./src/components/Input";
+import List from "./src/components/List";
 
 export default class App extends Component {
   state = {
@@ -7,13 +10,13 @@ export default class App extends Component {
     places: []
   };
 
-  placeNameChangeHandler = name => {
+  handlePlaceNameChange = placeName => {
     this.setState({
-      placeName: name
+      placeName
     });
   };
 
-  onPressLearnMore = () => {
+  handleOnPress = () => {
     const trimmedName = this.state.placeName.trim();
     if (trimmedName) {
       this.setState(({ places }) => {
@@ -25,26 +28,15 @@ export default class App extends Component {
   };
 
   render() {
-    const { places } = this.state;
-    const placesList = places.map((p, i) => <Text key={i}>{p}</Text>);
+    const { places, placeName } = this.state;
     return (
       <View style={styles.container}>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.placeInput}
-            placeholder="great place"
-            value={this.state.placeName}
-            onChangeText={this.placeNameChangeHandler}
-          />
-          <Button
-            style={styles.placeButton}
-            onPress={this.onPressLearnMore}
-            title="Add"
-            color="#841584"
-            accessibilityLabel="Learn more about this purple button"
-          />
-        </View>
-        <View>{placesList}</View>
+        <Input
+          placeName={placeName}
+          handlePlaceNameChange={this.handlePlaceNameChange}
+          handleOnPress={this.handleOnPress}
+        />
+        <List list={places} />
       </View>
     );
   }
@@ -57,19 +49,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "flex-start"
-  },
-  inputContainer: {
-    //flex: 1,
-    ///backgroundColor: "green",
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
-  },
-  placeInput: {
-    width: "70%"
-  },
-  placeButton: {
-    width: "30%"
   }
 });
