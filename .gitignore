@@ -3,10 +3,10 @@
 # expo
 .expo/
 
-.android/
-.ios/
+android/
+ios/
 .idea/
-
+.DS_Store
 # dependencies
 /node_modules
 
